@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "PulseSync",
+    "slug": "pulsesync-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#100E0B",
+    "android": {
+      "package": "com.pulsesync.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#100E0B"
+      }
+    },
+    "extra": {
+      "apiUrl": "http://10.0.2.2:4000",
+      "apiKey": "change-me-super-secret"
+    }
+  }
+}

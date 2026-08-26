@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      API_KEY: ${API_KEY:-only-me-super-secret}
+      JWT_SECRET: ${JWT_SECRET:-change-me-jwt-signing-secret}
+      JWT_EXPIRES_IN: 12h
+      DB_PATH: /app/data/pulsesync.db
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
+    volumes:
+      - pulsesync-data:/app/data
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+      args:
+        VITE_API_URL: ${VITE_API_URL:-}
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pulsesync-data:

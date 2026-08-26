@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/__tests__/client.test.ts","./src/api/client.ts","./src/components/eventstable.tsx","./src/components/logingate.tsx","./src/components/metricspanel.tsx","./src/components/pulsestrip.tsx","./src/hooks/useeventsstream.ts"],"errors":true,"version":"5.9.3"}

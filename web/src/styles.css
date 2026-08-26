@@ -1,0 +1,489 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+/* ---- Design tokens ----
+  Theme: deep navy control room with cyan signal and teal status accents.
+*/
+:root {
+  --bg: #08111F;
+  --panel: #0E1B2D;
+  --panel-raised: #13243A;
+  --border: #203550;
+  --border-strong: #31506F;
+  --text: #E8F0F7;
+  --text-muted: #9BB0C4;
+  --text-faint: #667F98;
+  --amber: #58B7D1;
+  --amber-rgb: 88, 183, 209;
+  --amber-dim: #2C6C7D;
+  --teal: #3EC9B0;
+  --red: #E5484D;
+
+  --font-display: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius: 6px;
+  --shadow-panel: 0 1px 0 rgba(0, 0, 0, 0.45), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(47, 104, 165, 0.16), transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(62, 201, 176, 0.06), transparent 35%);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--amber-dim);
+  color: var(--text);
+}
+
+/* Visible keyboard focus everywhere, per accessibility floor */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Layout shell ---------- */
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--panel-raised), var(--panel));
+  padding: 14px 24px;
+}
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.brand-mark { color: var(--amber); }
+
+.live-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.live-dot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 0 rgba(62, 201, 176, 0.6);
+  animation: pulse-dot 1.8s infinite;
+}
+
+.live-dot.offline::before {
+  background: var(--red);
+  animation: none;
+}
+
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 rgba(62, 201, 176, 0.55); }
+  70% { box-shadow: 0 0 0 8px rgba(62, 201, 176, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(62, 201, 176, 0); }
+}
+
+/* ---------- Signature element: the pulse strip ---------- */
+.pulse-strip-wrap {
+  max-width: 1280px;
+  margin: 12px auto 0;
+}
+
+.pulse-strip {
+  width: 100%;
+  height: 64px;
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #050B14;
+}
+
+/* ---------- Main content ---------- */
+.main {
+  flex: 1;
+  padding: 24px;
+}
+
+.main-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 860px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-panel);
+}
+
+.stat-card {
+  padding: 16px 18px;
+}
+
+.stat-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin: 0 0 6px;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+
+.panel {
+  padding: 18px 20px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---------- Bar chart digit labels ---------- */
+.digit-tick {
+  font-family: var(--font-display);
+  font-weight: 600;
+  fill: var(--text-muted);
+}
+
+/* ---------- Table controls ---------- */
+.controls-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.input, .select {
+  background: var(--panel-raised);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.input {
+  min-width: 220px;
+}
+
+.input::placeholder { color: var(--text-faint); }
+
+/* ---------- Virtualized event table ---------- */
+.table-scroll {
+  height: 520px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.table-head-row {
+  display: grid;
+  grid-template-columns: var(--cols);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--panel-raised);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.table-head-cell {
+  padding: 10px 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.table-head-cell:hover { color: var(--text-muted); }
+
+.table-body-row {
+  display: grid;
+  grid-template-columns: var(--cols);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.table-body-row:hover { background: rgba(255, 255, 255, 0.02); }
+
+.table-cell {
+  padding: 9px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.button-chip {
+  font-family: var(--font-display);
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--amber-rgb), 0.12);
+  color: var(--amber);
+  border: 1px solid rgba(var(--amber-rgb), 0.35);
+  font-size: 12px;
+}
+
+.mono { font-family: var(--font-display); color: var(--text-muted); }
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.pagination-status {
+  font-size: 12px;
+}
+
+.pagination-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.pagination-btn {
+  padding: 7px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- Login gate ---------- */
+.login-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 28px;
+  text-align: left;
+}
+
+.login-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+
+.login-sub {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 0 0 20px;
+}
+
+.field-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field .input { width: 100%; }
+
+.btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--amber);
+  background: var(--amber);
+  color: #101B28;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn:hover { filter: brightness(1.06); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-strong);
+}
+
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: min(360px, calc(100vw - 48px));
+  padding: 14px 14px 14px 16px;
+  border: 1px solid rgba(229, 72, 77, 0.55);
+  border-left: 3px solid var(--red);
+  border-radius: var(--radius);
+  background: #142235;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  animation: toast-in 180ms ease-out;
+}
+
+.toast-mark {
+  display: inline-flex;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.toast strong {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toast p {
+  margin: 3px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.toast-dismiss {
+  flex: 0 0 auto;
+  margin: -4px -4px 0 auto;
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.toast-dismiss:hover { color: var(--text); }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.footer-note {
+  color: var(--text-faint);
+  font-size: 11px;
+  padding: 16px 24px;
+  text-align: center;
+}

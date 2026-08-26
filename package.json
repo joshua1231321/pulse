@@ -1,0 +1,12 @@
+{
+  "name": "pulsesync_claude",
+  "version": "1.0.0",
+  "description": "A three-part system: a React Native (Expo) app with ten number buttons, a Node/Express API that ingests and stores each press as a time-series event, and a React admin dashboard that shows those events live, with search, sort, and virtualized rendering.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
