@@ -5,16 +5,23 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "backgroundColor": "#100E0B",
+    "splash": {
+      "backgroundColor": "#100E0B",
+      "resizeMode": "contain"
+    },
     "android": {
       "package": "com.pulsesync.mobile",
+      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "backgroundColor": "#100E0B"
       }
     },
     "extra": {
-      "apiUrl": "http://10.0.2.2:4000",
-      "apiKey": "change-me-super-secret"
+      "apiUrl": "https://strung-diffused-outthink.ngrok-free.dev",
+      "apiKey": "only-me-super-secret",
+      "eas": {
+        "projectId": "e2d4f262-f90d-44cc-ade5-a6f393578602"
+      }
     }
   }
 }

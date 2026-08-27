@@ -72,10 +72,13 @@ export async function sendButtonEvent(buttonValue: number): Promise<SendResult> 
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: res.statusText }));
+      console.error("PulseSync send failed", res.status, err);   // ADD THIS
       return { ok: false, error: err.error || "Request failed" };
     }
     return { ok: true };
   } catch (e) {
+    console.error("PulseSync network error", e);   // ADD THIS
     return { ok: false, error: e instanceof Error ? e.message : "Network error" };
   }
+  
 }
