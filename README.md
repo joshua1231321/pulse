@@ -111,6 +111,13 @@ npm run dev                 # http://localhost:5173
 On first load, paste the backend's `API_KEY` into the console's login screen — it's exchanged for
 an admin JWT and stored in `localStorage`; the raw key itself is never persisted.
 
+### Start Ngrok tunnel
+
+```bash
+ngrok http 5173 --domain=<your-reserved-name>.ngrok-free.app
+
+```
+
 ### Test / build
 
 ```bash
@@ -122,7 +129,7 @@ npm run build
 
 ```bash
 cd web
-docker build -t pulsesync-web --build-arg VITE_API_URL=https://your-backend-url .
+docker build -t pulsesync-web --build-arg VITE_API_URL=http://localhost:4000 .
 docker run -p 5173:80 pulsesync-web
 ```
 
@@ -157,11 +164,26 @@ npm test
 This requires Expo's build service (EAS) or a local Android SDK — neither is available in the
 environment this repo was authored in, so the APK itself isn't included; build it with:
 
+
+Edit mobile/app.json's extra block:
+
+`json
+"extra": {
+  "apiUrl": "https://<your-reserved-name>.ngrok-free.app",
+  "apiKey": "<your-generated-api-key>",
+  "eas": {
+    "projectId": "e2d4f262-f90d-44cc-ade5-a6f393578602"
+  }
+}`
+
+
 ```bash
 cd mobile
+
 npm install -g eas-cli
 eas login
-eas build --platform android --profile preview   # cloud build, produces a downloadable .apk
+
+eas build --platform android --profile preview --clear-cache  # cloud build, produces a downloadable .apk
 ```
 
 or, with a local Android SDK installed:
